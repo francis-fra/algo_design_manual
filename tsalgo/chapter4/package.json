@@ -1,0 +1,12 @@
+{
+  "name": "chapter4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "main": "ts-node src/main.ts",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
