@@ -1,0 +1,1 @@
+gcc -I include -c linked_list.c

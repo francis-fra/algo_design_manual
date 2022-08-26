@@ -15,20 +15,19 @@ public class Heap<T extends Comparable<T>> {
 
     // private int size;
     private HeapType type;
-    private List<T> arr;
+    private List<Object> arr;
     
     Heap(List<T> lst, HeapType type) {
         this.type = type;
         // this.size = lst.size();
-        arr = new ArrayList<T>();
+        arr = new ArrayList<Object>();
         make_heap(lst, type);
         // TODO: how to initialize (or clone) a generic container??
         // this.lst = new ArrayList<T>();
     }
 
-    // swap list by index
-    private void swap(List<T> lst, int a, int b) {
-        T tmp = lst.get(a);
+    private void swap(List<Object> lst, int a, int b) {
+        Object tmp = lst.get(a);
         lst.set(a, lst.get(b));
         lst.set(b, tmp);
     }
@@ -46,7 +45,6 @@ public class Heap<T extends Comparable<T>> {
     }
     */
 
-    // Heap constructor
     private void make_heap(List<T> lst, HeapType type) {
 
         for (int k=0; k<lst.size(); k++) {
@@ -59,21 +57,21 @@ public class Heap<T extends Comparable<T>> {
         arr.add(item);
         // heapify if necessary
         if (this.type == HeapType.MAX_HEAP)
-            bubble_up(arr.size()-1, Comparator.naturalOrder());
+            bubble(arr.size()-1, Comparator.naturalOrder());
         else
-            bubble_up(arr.size()-1, Comparator.reverseOrder());
+            bubble(arr.size()-1, Comparator.reverseOrder());
 
     }
 
-    // bubble_up up if necessary
-    private void bubble_up(int index, Comparator<T> comp) {
+    // FIXME: unsafe casting
+    private void bubble(int index, Comparator<T> comp) {
         int parent_idx = get_parent_idx(index); 
-        T parent = this.arr.get(parent_idx);
-        T me = this.arr.get(index);
+        T parent = (T) this.arr.get(parent_idx);
+        T me = (T) this.arr.get(index);
 
         if (comp.compare(parent, me) < 0) {
             swap(this.arr, parent_idx, index);
-            bubble_up(parent_idx, comp);
+            bubble(parent_idx, comp);
         }
     }
 
@@ -81,31 +79,31 @@ public class Heap<T extends Comparable<T>> {
         return (int) Math.floor((index-1)/2);
     }
 
-    // extract and delete root item
     public T extract_root() {
         if (arr.size() <= 0) {
             return null;
         }
         // extract the root
-        T root = this.arr.get(0);
+        T root = (T) this.arr.get(0);
         // need to replace the root only if there are more items left
         if (this.arr.size() > 1) {
 
             // move the rightmost to the root
-            T last_item = this.arr.get(this.arr.size()-1);
+            T last_item = (T) this.arr.get(this.arr.size()-1);
             this.arr.set(0, last_item);
             this.arr.remove(this.arr.size()-1);
 
             if (this.type == HeapType.MAX_HEAP)
-                bubble_down(0, Comparator.naturalOrder());
+                bubble_root(0, Comparator.naturalOrder());
             else
-                bubble_down(0, Comparator.reverseOrder());
+                bubble_root(0, Comparator.reverseOrder());
         }
+
         return root;
+
     }
 
-    // bubble down
-    private void bubble_down(int index, Comparator<T> comp) {
+    private void bubble_root(int index, Comparator<T> comp) {
 
         int younger_child_index = get_younger_child_index(index);
 
@@ -130,7 +128,7 @@ public class Heap<T extends Comparable<T>> {
 
         if (swap_index != index) {
             swap(this.arr, index, swap_index);
-            bubble_down(swap_index, comp);
+            bubble_root(swap_index, comp);
         }
 
     }
@@ -146,36 +144,36 @@ public class Heap<T extends Comparable<T>> {
         System.out.print('\n');
     }
 
-    // public static void main(String[] argv) {
+    public static void main(String[] argv) {
         
-    //     // TODO: unit test
-    //     List<Integer> numbers = new ArrayList<Integer>(Arrays.asList(5,3,8,1,6,2,9,7,4));
-    //     Integer arr[] = {5,3,8,1,6,2,9,7,4};
+        // TODO: unit test
+        List<Integer> numbers = new ArrayList<Integer>(Arrays.asList(5,3,8,1,6,2,9,7,4));
+        Integer arr[] = {5,3,8,1,6,2,9,7,4};
 
-    //     Heap<Integer> minheap = new Heap<Integer>(Arrays.asList(arr), HeapType.MIN_HEAP);
-    //     // Heap<Integer> maxheap = new Heap<Integer>(Arrays.asList(arr), HeapType.MAX_HEAP);
-    //     Heap<Integer> maxheap = new Heap<Integer>(numbers, HeapType.MAX_HEAP);
+        Heap<Integer> minheap = new Heap<Integer>(Arrays.asList(arr), HeapType.MIN_HEAP);
+        // Heap<Integer> maxheap = new Heap<Integer>(Arrays.asList(arr), HeapType.MAX_HEAP);
+        Heap<Integer> maxheap = new Heap<Integer>(numbers, HeapType.MAX_HEAP);
 
-    //     minheap.show();
-    //     maxheap.show();
+        minheap.show();
+        maxheap.show();
 
-    //     String str_arr[] = {"bannana", "water", "apple", "pear", "cat", "nuts"};
-    //     Heap<String> maxheap_string = new Heap<String>(Arrays.asList(str_arr), HeapType.MAX_HEAP);
-    //     maxheap_string.show();
+        String str_arr[] = {"bannana", "water", "apple", "pear", "cat", "nuts"};
+        Heap<String> maxheap_string = new Heap<String>(Arrays.asList(str_arr), HeapType.MAX_HEAP);
+        maxheap_string.show();
 
-    //     int root = minheap.extract_root();
-    //     System.out.printf("root: %d\n", root);
-    //     minheap.show();
+        int root = minheap.extract_root();
+        System.out.printf("root: %d\n", root);
+        minheap.show();
 
-    //     root = minheap.extract_root();
-    //     System.out.printf("root: %d\n", root);
-    //     minheap.show();
+        root = minheap.extract_root();
+        System.out.printf("root: %d\n", root);
+        minheap.show();
         
-    //     for (int k=0; k<6; k++) {
-    //         System.out.printf("root: %s\n", maxheap_string.extract_root());
-    //         maxheap_string.show();
-    //     }
+        for (int k=0; k<6; k++) {
+            System.out.printf("root: %s\n", maxheap_string.extract_root());
+            maxheap_string.show();
+        }
 
-    // }
+    }
 
 }

@@ -12,6 +12,12 @@ plugins {
 
     // Apply the application plugin to add support for building an application
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+javafx {
+   //  version = "18.0.2"
+    modules = [ 'javafx.controls' ]
 }
 
 // Define the main class for the application
@@ -58,7 +64,13 @@ task execute_sorting(type:JavaExec) {
    classpath = sourceSets.main.runtimeClasspath
 }
 
-task execute_ch04(type:JavaExec) {
-   main = 'com.fra.jalgo.ch04.Heap'
+// task execute_ch04(type:JavaExec) {
+//    main = 'com.fra.jalgo.ch04.Heap'
+//    classpath = sourceSets.main.runtimeClasspath
+// }
+
+task execute_ch05(type:JavaExec) {
+   main = 'com.fra.jalgo.ch05.Graph'
    classpath = sourceSets.main.runtimeClasspath
+   standardInput = System.in
 }

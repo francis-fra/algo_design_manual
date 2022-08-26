@@ -1,0 +1,19 @@
+VPATH = ../lib
+INC = ../lib
+CFLAGS = -I $(INC)
+LDFLAGS= -lfra
+
+main: main.o
+	gcc $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+clean:
+	rm *.o
+
+# main: main.c 
+# 	gcc $(CFLAGS) -o $@ $^ -lfra
+
+# cmd
+# gcc -o main main.c -I"../lib" -L"../lib" -lfra
+# cc  -I ../lib -L ../lib -lfra  -c -o main.o main.c
+# cc  -I ../lib -c -o main.o main.c
+# cc   main.o   -o main

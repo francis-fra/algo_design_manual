@@ -1,0 +1,22 @@
+
+VPATH    = include
+CPPFLAGS = -I include
+
+# main_test: main_test.o linked_list.o
+main: main.o linked_list.o
+
+main.o: linked_list.h
+linked_list.o : linked_list.h 
+
+
+
+# linked_list.o : linked_list.c linked_list.h 
+	# gcc $(CPPFLAGS) -c linked_list.c
+
+
+# count_words: counter.o lexer.o -lfl
+# count_words.o: counter.h
+# counter.o: counter.h lexer.h
+# lexer.o: lexer.h
+
+# main_test: main_test.c

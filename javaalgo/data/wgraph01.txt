@@ -1,0 +1,11 @@
+# nvertices nedges 
+6 8
+# edge link
+0 5 2
+1 2 1
+1 5 3
+2 5 2
+2 4 6
+2 3 4
+3 4 1
+4 5 2
